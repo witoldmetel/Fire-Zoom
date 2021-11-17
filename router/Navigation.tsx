@@ -14,8 +14,27 @@ function Navigation() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={ROUTE.HOME}>
-				<Stack.Screen name={ROUTE.HOME} component={Home} />
-				<Stack.Screen name={ROUTE.MEETING_ROOM} component={MeetingRoom} />
+				<Stack.Screen
+					name={ROUTE.HOME}
+					component={Home}
+					options={{
+						title: 'Fire Zoom',
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name={ROUTE.MEETING_ROOM}
+					component={MeetingRoom}
+					options={{
+						title: 'Start a Meeting',
+						headerStyle: {
+							backgroundColor: '#1c1c1c',
+							shadowOpacity: 0,
+						},
+						headerTintColor: '#fff',
+						headerBackTitleVisible: false,
+					}}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
