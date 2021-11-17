@@ -1,15 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	Image,
+	ImageSourcePropType,
+} from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-export function ContactButton() {
+type ContactButtonProps = {
+	id: number;
+	type: string;
+	name: string;
+
+	avatar?: ImageSourcePropType;
+};
+
+export function ContactButton(props: ContactButtonProps) {
+	const avatar = props.avatar ? (
+		<Image source={props.avatar} style={styles.image} />
+	) : (
+		<View style={styles.icon}>
+			<AntDesign name="star" size={30} color="#efefef" />
+		</View>
+	);
+
 	return (
 		<View style={styles.root}>
-			<View style={styles.icon}>
-				<AntDesign name="star" size={30} color="#efefef" />
-			</View>
-			<Text style={styles.buttonText}>Starred</Text>
+			{avatar}
+			<Text style={styles.buttonText}>{props.name}</Text>
 		</View>
 	);
 }
@@ -19,6 +39,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginTop: 20,
+	},
+	image: {
+		width: 50,
+		height: 50,
+		borderRadius: 20,
 	},
 	icon: {
 		backgroundColor: '#333',

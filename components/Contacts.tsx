@@ -2,11 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import { ContactButton } from './ContactButton';
+import { contacts } from './constants';
 
 export function Contacts() {
 	return (
 		<View>
-			<ContactButton />
+			{contacts.map((contact) => (
+				<ContactButton {...contact} />
+			))}
 		</View>
 	);
 }
