@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { io, Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { Camera } from 'expo-camera';
 
-import { StartMeeting } from '../components';
+import { StartMeeting, CameraView } from '../components';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -11,7 +12,7 @@ function MeetingRoom() {
 	const [name, setName] = useState<string>();
 	const [roomId, setRoomId] = useState<string>();
 	const [activeUsers, setActiveUsers] = useState();
-	const [starCamera, setStartCamera] = useState(false);
+	const [startCamera, setStartCamera] = useState(false);
 
 	useEffect(() => {
 		const API_URL = 'http://192.168.0.161:3001';
@@ -23,22 +24,40 @@ function MeetingRoom() {
 		});
 	}, []);
 
-	const joinRoom = () => {
-		socket.emit('join-room', { roomId, userName: name });
+	const cameraHandler = async () => {
+		const { status } = await Camera.requestCameraPermissionsAsync();
 
-		setName('');
-		setRoomId('');
+		if (status === 'granted') {
+			setStartCamera(true);
+		} else {
+			setStartCamera(false);
+
+			Alert.alert('Access to camera denied');
+		}
+	};
+
+	const joinRoom = () => {
+		cameraHandler().then(() => {
+			socket.emit('join-room', { roomId, userName: name });
+
+			setName('');
+			setRoomId('');
+		});
 	};
 
 	return (
 		<View style={styles.root}>
-			<StartMeeting
-				userName={name}
-				roomId={roomId}
-				userNameHandler={setName}
-				roomIdHandler={setRoomId}
-				joinRoomHandler={joinRoom}
-			/>
+			{startCamera ? (
+				<CameraView />
+			) : (
+				<StartMeeting
+					userName={name}
+					roomId={roomId}
+					userNameHandler={setName}
+					roomIdHandler={setRoomId}
+					joinRoomHandler={joinRoom}
+				/>
+			)}
 		</View>
 	);
 }
