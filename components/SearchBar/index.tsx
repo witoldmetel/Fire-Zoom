@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 export function SearchBar() {

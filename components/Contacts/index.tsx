@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 
 import { ContactButton } from './ContactButton';
 import { contacts } from './constants';
@@ -8,12 +8,8 @@ export function Contacts() {
 	return (
 		<View>
 			{contacts.map((contact) => (
-				<ContactButton {...contact} />
+				<ContactButton key={contact.id} {...contact} />
 			))}
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	root: {},
-});

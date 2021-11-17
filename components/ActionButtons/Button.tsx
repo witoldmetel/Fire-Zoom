@@ -1,19 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 type ButtonProps = {
 	icon: string;
 	title: string;
+	screenName: string;
 
 	color?: string;
 };
 
 export function Button(props: ButtonProps) {
+	// @todo: Add proper type
+	const navigation = useNavigation<any>();
+
 	return (
 		<View style={styles.root}>
 			<TouchableOpacity
+				onPress={() => {
+					navigation.navigate(props.screenName);
+				}}
+				disabled={!props.screenName}
 				style={{ ...styles.button, backgroundColor: props.color ?? '#0470DC' }}
 			>
 				<FontAwesome name={props.icon} size={25} color="#efefef" />
