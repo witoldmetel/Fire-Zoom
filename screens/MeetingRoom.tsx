@@ -1,10 +1,32 @@
-import React, { useState } from 'react';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { io, Socket } from 'socket.io-client';
+
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 function MeetingRoom() {
 	const [name, setName] = useState<string>();
 	const [roomId, setRoomId] = useState<string>();
+	const [activeUsers, setActiveUsers] = useState();
+
+	useEffect(() => {
+		const API_URL = 'http://192.168.0.161:3001';
+		socket = io(API_URL);
+
+		socket.on('connection', () => console.log('connected'));
+		socket.on('all-users', (users) => {
+			setActiveUsers(users);
+		});
+	}, []);
+
+	const joinRoom = () => {
+		socket.emit('join-room', { roomId, userName: name });
+
+		setName('');
+		setRoomId('');
+	};
 
 	return (
 		<View style={styles.root}>
@@ -29,7 +51,7 @@ function MeetingRoom() {
 				</View>
 
 				<View style={{ alignItems: 'center' }}>
-					<TouchableOpacity style={styles.button} onPress={() => {}}>
+					<TouchableOpacity style={styles.button} onPress={() => joinRoom()}>
 						<Text style={styles.buttonTitle}>Start Meeting</Text>
 					</TouchableOpacity>
 				</View>
