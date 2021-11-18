@@ -1,19 +1,48 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+	View,
+	StyleSheet,
+	SafeAreaView,
+	Text,
+	Modal,
+	Alert,
+	TouchableOpacity,
+} from 'react-native';
 import { Camera } from 'expo-camera';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { actionButtons } from './constants';
+import { Chat } from '../Chat';
 
 type CameraViewProps = {
 	activeUsers: { userName: string }[];
+	modalVisible: boolean;
+
+	modalHandler: (modalVisible: boolean) => void;
 };
 
-export function CameraView({ activeUsers }: CameraViewProps) {
+export function CameraView({
+	activeUsers,
+	modalVisible,
+	modalHandler,
+}: CameraViewProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
+			<Modal
+				animationType="slide"
+				transparent={false}
+				presentationStyle="fullScreen"
+				visible={modalVisible}
+				onRequestClose={() => {
+					Alert.alert('Modal has been closed.');
+
+					modalHandler(!modalVisible);
+				}}
+			>
+				<Chat modalHandler={modalHandler} />
+			</Modal>
+
 			<View style={styles.usersWrapper}>
 				<View style={styles.cameraWrapper}>
 					<Camera
@@ -35,7 +64,14 @@ export function CameraView({ activeUsers }: CameraViewProps) {
 
 			<View style={styles.footer}>
 				{actionButtons.map((button) => (
-					<TouchableOpacity key={button.id} style={styles.button}>
+					<TouchableOpacity
+						key={button.id}
+						style={styles.button}
+						// @todo: Need refactor press handling
+						onPress={
+							button.title === 'Chat' ? () => modalHandler(true) : () => {}
+						}
+					>
 						<FontAwesome
 							name={button.icon}
 							size={24}

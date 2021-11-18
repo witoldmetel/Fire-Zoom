@@ -11,8 +11,9 @@ let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 function MeetingRoom() {
 	const [name, setName] = useState<string>();
 	const [roomId, setRoomId] = useState<string>();
-	const [activeUsers, setActiveUsers] = useState();
+	const [activeUsers, setActiveUsers] = useState([]);
 	const [startCamera, setStartCamera] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	useEffect(() => {
 		const API_URL = 'http://192.168.0.161:3001';
@@ -48,7 +49,11 @@ function MeetingRoom() {
 	return (
 		<View style={styles.root}>
 			{startCamera ? (
-				<CameraView activeUsers={activeUsers ?? []} />
+				<CameraView
+					activeUsers={activeUsers}
+					modalVisible={modalVisible}
+					modalHandler={setModalVisible}
+				/>
 			) : (
 				<StartMeeting
 					userName={name}

@@ -20,4 +20,9 @@ export const actionButtons = [
 		icon: 'group',
 		title: 'Participants',
 	},
+	{
+		id: 5,
+		icon: 'comment',
+		title: 'Chat',
+	},
 ];

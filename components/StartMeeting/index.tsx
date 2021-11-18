@@ -1,6 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+	View,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+} from 'react-native';
 
 type StartMeetingProps = {
 	userName?: string;
