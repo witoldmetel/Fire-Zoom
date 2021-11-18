@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Alert, SafeAreaView, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Camera } from 'expo-camera';
 
@@ -7,11 +7,30 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { actionButtons } from './constants';
 
-export function CameraView() {
+type CameraViewProps = {
+	activeUsers: { userName: string }[];
+};
+
+export function CameraView({ activeUsers }: CameraViewProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<View style={styles.cameraWrapper}>
-				<Camera style={{ width: '100%', height: '100%' }} type="front" />
+			<View style={styles.usersWrapper}>
+				<View style={styles.cameraWrapper}>
+					<Camera
+						style={{
+							...styles.activeUserWrapper,
+							width: !activeUsers.length ? '100%' : 200,
+							height: !activeUsers.length ? '100%' : 200,
+						}}
+						type="front"
+					/>
+
+					{activeUsers.map((user, idx) => (
+						<View key={idx} style={styles.activeUserWrapper}>
+							<Text style={{ color: '#fff' }}>{user.userName}</Text>
+						</View>
+					))}
+				</View>
 			</View>
 
 			<View style={styles.footer}>
@@ -31,8 +50,25 @@ export function CameraView() {
 }
 
 const styles = StyleSheet.create({
-	cameraWrapper: {
+	usersWrapper: {
 		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#000',
+	},
+	cameraWrapper: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+	},
+	activeUserWrapper: {
+		borderColor: 'gray',
+		borderWidth: 1,
+		width: 200,
+		height: 200,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	footer: { flexDirection: 'row', justifyContent: 'space-around' },
 	button: {

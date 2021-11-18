@@ -48,7 +48,7 @@ function MeetingRoom() {
 	return (
 		<View style={styles.root}>
 			{startCamera ? (
-				<CameraView />
+				<CameraView activeUsers={activeUsers ?? []} />
 			) : (
 				<StartMeeting
 					userName={name}
