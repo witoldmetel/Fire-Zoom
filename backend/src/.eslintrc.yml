@@ -1,0 +1,320 @@
+---
+env:
+  browser: false
+  es6: true
+  node: true
+
+parserOptions:
+  ecmaVersion: 8 # set to enable `comma-dangle` for functions
+
+plugins:
+  - '@typescript-eslint'
+  - brackets
+  - simple-import-sort
+
+rules:
+  '@typescript-eslint/ban-types': error
+  '@typescript-eslint/brace-style':
+    - error
+    - 1tbs
+    - allowSingleLine: true
+  '@typescript-eslint/comma-dangle':
+    - error
+    - always-multiline
+  '@typescript-eslint/comma-spacing': error
+  '@typescript-eslint/default-param-last': error
+  # disabling until it can also ignore obvious cases like `const fn = (s: string) => `${s}-token`
+  '@typescript-eslint/explicit-function-return-type':
+    - off
+    - allowExpressions: true
+  '@typescript-eslint/explicit-member-accessibility': off
+  '@typescript-eslint/func-call-spacing': error
+  '@typescript-eslint/indent':
+    - error
+    - 4
+    - SwitchCase: 1
+      ignoredNodes:
+        # bug for multiple generic args https://github.com/typescript-eslint/typescript-eslint/milestone/1t/issues/455
+        - 'TSTypeParameterInstantiation'
+        # bug for multiline `extends` https://github.com/typescript-eslint/typescript-eslint/issues/1597
+        # selectors prepared by hand using https://astexplorer.net/ (set parser to @typescript-eslint/parser)
+        - 'ClassDeclaration[superClass] > CallExpression'
+        - 'ClassDeclaration[superClass] > Identifier'
+  '@typescript-eslint/interface-name-prefix': off
+  '@typescript-eslint/keyword-spacing': error
+  '@typescript-eslint/naming-convention':
+    - error
+    - selector: default
+      format: [camelCase]
+      leadingUnderscore: allowSingleOrDouble
+      trailingUnderscore: forbid
+    - selector: [variable, property, memberLike, parameter]
+      format: [camelCase, UPPER_CASE, PascalCase]
+      leadingUnderscore: allowSingleOrDouble
+      trailingUnderscore: forbid
+    - selector: function
+      format: [camelCase, PascalCase]
+      leadingUnderscore: allowSingleOrDouble
+      trailingUnderscore: forbid
+    - selector: typeLike
+      format: [PascalCase]
+      leadingUnderscore: allowSingleOrDouble
+      trailingUnderscore: forbid
+    - selector: enumMember
+      format: [UPPER_CASE]
+      leadingUnderscore: allowSingleOrDouble
+      trailingUnderscore: forbid
+  '@typescript-eslint/no-array-constructor': error
+  '@typescript-eslint/no-confusing-non-null-assertion': error
+  '@typescript-eslint/no-duplicate-imports': error
+  '@typescript-eslint/no-dynamic-delete': off
+  '@typescript-eslint/no-empty-function': off
+  '@typescript-eslint/no-empty-interface': off
+  '@typescript-eslint/no-extra-semi': error
+  '@typescript-eslint/no-for-in-array': error
+  '@typescript-eslint/no-implied-eval': error
+  '@typescript-eslint/no-invalid-this': error
+  '@typescript-eslint/no-non-null-asserted-optional-chain': error
+  '@typescript-eslint/no-shadow':
+    - error
+    - hoist: all
+  '@typescript-eslint/no-this-alias': error
+  '@typescript-eslint/no-unnecessary-condition':
+    - error
+    - allowConstantLoopConditions: true
+  '@typescript-eslint/no-unnecessary-type-assertion': error
+  '@typescript-eslint/no-unnecessary-type-constraint': error
+  '@typescript-eslint/no-use-before-define':
+    - error
+    - functions: false
+      classes: false
+      enums: false
+      variables: true
+      typedefs: true
+  '@typescript-eslint/no-useless-constructor': error
+  '@typescript-eslint/non-nullable-type-assertion-style': error
+  '@typescript-eslint/prefer-as-const': error
+  '@typescript-eslint/prefer-includes': error
+  '@typescript-eslint/prefer-enum-initializers': error
+  '@typescript-eslint/prefer-literal-enum-member': error
+  '@typescript-eslint/prefer-nullish-coalescing': error
+  '@typescript-eslint/prefer-optional-chain': error
+  '@typescript-eslint/prefer-string-starts-ends-with': error
+  '@typescript-eslint/quotes':
+    - error
+    - single
+    - avoidEscape: true
+  '@typescript-eslint/semi':
+    - error
+    - always
+  '@typescript-eslint/restrict-plus-operands':
+    - error
+    - checkCompoundAssignments: true
+  '@typescript-eslint/return-await':
+    - error
+    - in-try-catch
+  '@typescript-eslint/space-before-function-paren':
+    - error
+    - anonymous: never
+      asyncArrow: always
+      named: never
+  '@typescript-eslint/strict-boolean-expressions': off
+  '@typescript-eslint/switch-exhaustiveness-check': error
+  '@typescript-eslint/typedef':
+    - error
+    - arrowParameter: false
+      memberVariableDeclaration: false
+      parameter: true
+  '@typescript-eslint/unbound-method': error
+  '@typescript-eslint/unified-signatures': off
+  array-bracket-newline:
+    - error
+    - consistent
+  array-bracket-spacing:
+    - error
+    - never
+  array-element-newline:
+    - error
+    - consistent
+  arrow-body-style:
+    - error
+    - as-needed
+  arrow-parens:
+    - error
+    - as-needed
+  arrow-spacing:
+    - error
+    - before: true
+      after: true
+  block-spacing:
+    - error
+    - always
+  brackets/array-bracket-newline: error
+  brackets/call-parens-newline: error
+  brackets/conditional-parens-newline: error
+  brackets/func-parens-newline: error
+  brackets/object-curly-newline: error
+  camelcase: 'off' # overridden by ts-eslint
+  comma-style:
+    - error
+    - last
+  computed-property-spacing:
+    - error
+    - never
+  dot-notation: error
+  function-call-argument-newline:
+    - error
+    - consistent
+  # I'd like to enable this with `consistent` mode, but then you can't `fn(a => \n otherFn(a, 1)\n);`
+  function-paren-newline: 'off'
+  generator-star-spacing:
+    - error
+    - after
+  import/first: error
+  import/newline-after-import:
+    - error
+    - count: 2
+  import/no-duplicates: error
+  import/no-extraneous-dependencies: error
+  import/no-named-as-default-member: off
+  import/no-named-as-default: off
+  import/no-relative-parent-imports: off # would also report aliased tsconfig paths! no-restricted-imports is used instead
+  import/no-unused-modules: off # doesn't seem to report anything in our setup
+  import/no-useless-path-segments: error
+  key-spacing: error
+  max-len:
+    - error
+    - ignoreUrls: true
+      # ignoring long import lines -- you shouldn't be looking at them anyway, should be managed by the IDE
+      ignorePattern: '(^import )|(eslint-disable)'
+      code: 100
+  multiline-ternary:
+    - error
+    - always-multiline
+  no-await-in-loop: 'off'
+  no-constant-condition: error
+  no-control-regex: error
+  no-duplicate-case: error
+  no-empty: 'off'
+  no-ex-assign: error
+  no-invalid-regexp: error
+  no-lonely-if: error
+  no-mixed-operators:
+    - error
+    - groups: [
+        ["+", "-", "*", "/", "%", "**"],
+        ["&", "|", "^", "~", "<<", ">>", ">>>"],
+        ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+        ["&&", "||", "?:"],
+        ["in", "instanceof"]
+      ]
+      allowSamePrecedence: true
+  no-multi-assign: error
+  no-multi-spaces:
+    - error
+    - ignoreEOLComments: true
+  no-multi-str: error
+  # doesn't allow method override declarations, and tsc won't allow duplicates anyway
+  no-dupe-class-members: 'off'
+  no-octal: error
+  no-octal-escape: error
+  no-param-reassign:
+    - error
+    - props: true
+      ignorePropertyModificationsFor: ['acc']
+  no-regex-spaces: error
+  no-restricted-imports:
+    - error
+    - paths:
+        - name: typeorm
+          importNames: [BaseEntity]
+          message: Use our BaseEntity from @entities
+      patterns:
+        - '../*' # forbid parent-relative imports
+        - '@ramp-instant/*' # vscode erroneusly uses the package alias instead of just @backend-common
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+  no-return-await: 'off' # overridden by ts-eslint
+  no-sequences: error
+  no-shadow: 'off' # overridden by ts-eslint
+  no-tabs: error
+  no-unneeded-ternary: error
+  no-unsafe-negation: error
+  no-unused-expressions: 'off'
+  no-useless-concat: error
+  no-useless-rename: error
+  no-whitespace-before-property: error
+  nonblock-statement-body-position:
+    - error
+    - beside
+  object-curly-newline: error
+  object-curly-spacing:
+    - error
+    - always
+    - objectsInObjects: false
+  object-property-newline:
+    - error
+    - allowAllPropertiesOnSameLine: true
+  operator-linebreak:
+    - error
+    - before
+    - overrides:
+        '=': after
+  padded-blocks:
+    - error
+    - blocks: never
+      switches: never
+  prefer-arrow-callback: error
+  prefer-exponentiation-operator: error
+  prefer-named-capture-group: error
+  prefer-numeric-literals: error
+  prefer-object-spread: error
+  prefer-rest-params: error
+  prefer-spread: error
+  prefer-template: error
+  require-atomic-updates: error
+  require-yield: error
+  rest-spread-spacing: error
+  semi-spacing: error
+  semi-style:
+    - error
+    - last
+  simple-import-sort/imports:
+    - error
+    - groups: # see https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
+        - ["^\\u0000"] # side-effect imports
+        - ["^@?\\w"] # regular npm packages
+        - [
+            '^@(entities|logic|utils|widget|app)',
+          ] # internal path aliases
+        - ["^\\."] # sibling files
+
+  sort-imports: 'off' # sorting done by simple-import-sort
+  space-before-blocks: error
+  space-infix-ops: error
+  space-unary-ops: error
+  switch-colon-spacing: error
+  template-curly-spacing: error
+  template-tag-spacing: error
+  yield-star-spacing: error
+
+overrides:
+  - files: '*.spec.ts'
+    rules:
+      # in tests we can let multiple args be grouped in one line
+      function-call-argument-newline: 'off'
+      # disabling so `describe` can someitmes have a padded block, like a class
+      padded-blocks: 'off'
+      max-len:
+        - error
+        - ignoreUrls: true
+          code: 100
+          # disabling max-len for test titles since wrapping them is sometimes even uglier
+          ignorePattern: '(^\s*(it|describe)\()|(^import )|(eslint-disable)'
+  - files: '*.controller.ts'
+    rules:
+      # typescript's extension rule is broken on parameter decorators
+      # TODO remove this override once it's fixed
+      # https://github.com/typescript-eslint/typescript-eslint/issues/1232
+      '@typescript-eslint/indent': off

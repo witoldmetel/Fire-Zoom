@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"target": "es2016",
+		"outDir": "dist",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": false,
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"strict": true,
+		"noEmitOnError": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"skipLibCheck": true,
+		"typeRoots": ["node_modules/@types"],
+		"lib": ["es2017", "es2019", "es2020"],
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true
+	},
+	"include": ["frontend"],
+	"exclude": ["node_modules"],
+	"references": [{ "path": "./backend" }]
+}

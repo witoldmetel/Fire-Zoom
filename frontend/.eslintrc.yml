@@ -1,0 +1,70 @@
+---
+ignorePatterns:
+  - '*.d.ts'
+
+env:
+  browser: true
+
+extends:
+  - plugin:prettier/recommended
+  - prettier/@typescript-eslint
+  - prettier/react
+parser: '@typescript-eslint/parser'
+
+parserOptions:
+  project: tsconfig.json
+  sourceType: module
+
+settings:
+  react:
+    version: detect
+
+plugins:
+  - eslint-plugin-react
+  - prettier
+  - simple-import-sort
+
+rules:
+  '@typescript-eslint/explicit-member-accessibility':
+    - error
+    - accessibility: explicit
+      overrides:
+        constructors: off
+  '@typescript-eslint/no-empty-function': error
+  '@typescript-eslint/no-empty-interface': error
+  '@typescript-eslint/semi':
+    - error
+    - always
+  '@typescript-eslint/unified-signatures': error
+  arrow-parens:
+    - off
+    - always
+  comma-dangle: off
+  no-empty: error
+  react/jsx-boolean-value:
+    - error
+    - always
+  react/jsx-curly-spacing: off
+  react/jsx-equals-spacing: off
+  react/jsx-key: error
+  react/jsx-no-bind: off
+  react/jsx-wrap-multilines: off
+
+  simple-import-sort/imports:
+    - error
+    - groups: # see https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
+        - ["^\\u0000"] # side-effect imports
+        - ["^@?\\w"] # regular npm packages
+        - ['^@ramp-instant'] # instant packages
+        - ['^@(app|assets|shared|store|tests)'] # internal path aliases
+        - ["^\\."] # sibling files
+        - ['^[.].*[.]scss$'] # styles
+
+  '@typescript-eslint/no-unnecessary-type-assertion': error
+  '@typescript-eslint/unbound-method': error
+  '@typescript-eslint/no-unsafe-call': off
+  '@typescript-eslint/ban-types': error
+  '@typescript-eslint/naming-convention': off
+  '@typescript-eslint/no-use-before-define': error
+  '@typescript-eslint/quotes': off
+  '@typescript-eslint/no-unsafe-return': off
