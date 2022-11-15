@@ -22,6 +22,11 @@ In backend folder to run server
   node index.js
 ```
 
+# Resources
+
+- https://www.youtube.com/watch?v=dHTGKB6tIQI
+- https://www.youtube.com/watch?v=ZVznzY7EjuY
+
 # Screenshots
 
 |         Dashboard         |         New Meeting      |
